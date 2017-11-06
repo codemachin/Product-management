@@ -1,0 +1,175 @@
+<!--=================================================== start of navigation bar ======================================================-->
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#/" style="font-family: 'Lobster', cursive">Ecommerce Product Management</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    
+
+    <ul class="navbar-nav my-2 my-lg-0">
+
+      
+      
+      <li class="nav-item active">
+        <a class="nav-link" style="cursor: pointer;">Demo purpose only</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#/upload">Create new data</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!--=================================================== end of navigation bar ======================================================-->
+
+<div class="bgCustom" style="min-height: 100vh;padding-bottom: 100px">
+  <div class="container" style="padding-top: 80px">
+
+    <!--================================ warning card when there are no products ============================================-->
+
+      <div ng-if="myDash.items.length==0" class="card text-white bg-primary" ng-show="myDash.items.length<1" style="padding: 2%;align-items: center;color: #004d40;margin: 0 8%;">
+        <h1>No products are uploaded. You need to upload products to start with.</h1><br>
+        <a href = "/#/upload" class="btn btn-light" style="width: 140px">Upload zip now!</a>
+      </div>    
+      
+    <!--================================================= end of warning card ======================================================-->
+
+      <div ng-if="myDash.items.length>0" style="padding-top: 20px;margin-bottom: 50px;display: block;font-size: 1em;">
+
+        <!--============================================ start of filters and search bars ================================================-->
+
+        <div class="row">
+          <div ng-show="myDash.items[0].SKU" class="inp form-group col-md-6">
+            <br>
+            <!-- input box and buttons -->
+            <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ng-model="myDash.search" placeholder="Search Products">
+          </div>
+          
+          <div class="select col-md-3 col-lg-3">
+                <select name="slct" id="slct" ng-change="myDash.filterLot()" ng-model="myDash.search1.lotNo">
+                  <option disabled selected value>Filter by Lot</option>
+                  <option value="">All</option>
+                  <option ng-repeat="lot in myDash.lots" value="{{lot.lotNo}}">{{lot.lotNo}}</option>
+                </select>
+          </div>
+          <div class="col-md-3 col-lg-3 rv">
+            <button type="button" ng-click="myDash.sort()" id="od" class="btn btn-light btn-block"><i class="fa fa-sort" aria-hidden="true"></i>&nbsp;Reverse</button>
+          </div>
+        </div>
+
+        <!--=========================================  end of filters and search bars =============================================-->
+
+      </div>
+      
+      <!--=========================================     start of product card    =============================================-->
+
+      <div class="row">
+        <div class="col-sm-4" ng-repeat="item in myDash.items |filter : myDash.search1|filter:myDash.search | limitTo : myDash.totalDisplayed">
+          <div class="card ov" style="margin-bottom: 20px; display: flex;align-items: stretch;min-height:26vw;max-height: 26vw;overflow-y: hidden;">
+              <img ng-src="../img/product/{{item.imageName}}.jpg" class="img-responsive" style="width: 100%" fix-it>
+              <div class="overlay">
+                <div class="text" style="text-align: center;">
+                  <h3>{{item.mainCategory}}</h3>
+                  <p>SKU code : {{item.SKU}}</p>
+                  <p>Color : {{item.color.name}}</p>
+                  <button class="btn btn-light" ng-click="myDash.edit(item)" data-toggle="modal" data-target=".bd-example-modal-lg">Edit</button>
+                  <button class="btn btn-danger" ng-click="myDash.delete(item._id,item)">Delete</button>
+                </div>
+              </div>
+
+          </div>
+        </div>
+
+        <!--=========================================     end of product card    =============================================-->
+
+        <div class="col-12" ng-show="myDash.items.length>20" style="text-align: center;">
+            <button class="btn btn-info" ng-click="myDash.loadMore()" >Load more</button>
+        </div>
+
+      </div>
+
+      <!--=========================================     start of edit modal   =============================================-->
+
+      <div class="modal fade bd-example-modal-lg" my-modal tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="container">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">SKU</label>
+                    <input type="text" ng-model="myDash.sku" class="form-control" id="recipient-name">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Color</label>
+                    <input class="form-control" ng-model="myDash.color" id="message-text">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">MainCategory</label>
+                    <input type="text" ng-model="myDash.mainCategory" class="form-control" id="recipient-name">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">ImageName</label>
+                    <input class="form-control" ng-model="myDash.imageName" id="message-text">
+                  </div>
+
+                  <!--start of file upload division-->
+                  <form name="myDash.upload_form">
+                    Upload image (optional) &nbsp;
+                          <input 
+                              type="file" 
+                              ngf-select 
+                              ng-model="myDash.file" 
+                              name="file" 
+                              ngf-pattern="'.jpg'"
+                              accept="*" 
+                              ngf-max-size="1GB" 
+                              />
+                          <i ng-show="myDash.upload_form.file.$error.maxSize">File too large : max allowed is 1GB</i>
+                          <p>{{myDash.progress}}</p>
+                          <p>(only .jpg format allowed strictly)</p>
+                  </form>
+                  <!-- end of file upload division -->
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" ng-click="myDash.run(myDash.id,myDash.imageName)" class="btn btn-primary">Save Product</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--=========================================     end of edit modal    =============================================-->
+
+  </div>
+</div>
+
+<!--=========================================     start of footer    =============================================-->
+
+<footer class="footmar">
+  <div>
+  <br>
+    Created and Designed by:
+    <br>
+    Vivek Shankar<br>
+    <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=viveksome@gmail.com" style="color: white;"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;viveksome@gmail.com</a><br>
+    <a href=""><i class="fa fa-facebook-square" aria-hidden="true" style="color: #3B5998"></i></a>
+    <a href=""><i class="fa fa-google-plus" aria-hidden="true" style="color: #D62221"></i></a>
+    <a href=""><i class="fa fa-twitter-square" aria-hidden="true" style="color: #1DA1F2"></i></a>
+
+  </div>
+</footer>
+
+<!--=========================================     end footer    =============================================-->

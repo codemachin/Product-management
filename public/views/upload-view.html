@@ -1,0 +1,90 @@
+<!--=================================================== start of navigation bar ======================================================-->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#/" style="font-family: 'Lobster', cursive">Ecommerce Product Management</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    
+
+    <ul class="navbar-nav my-2 my-lg-0">
+
+    
+      
+      <li class="nav-item active">
+        <a class="nav-link" style="cursor: pointer">Demo purpose only</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#/">Home</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!--=================================================== end of navigation bar ======================================================-->
+
+<div class="bgCustom" style="min-height: 94.5vh;padding-bottom: 100px">
+  <div class="container" style="padding-top: 40px">
+    
+    <!--=================================================== file upload card starts ======================================================-->
+
+    <div class="card" style="padding: 2%">
+      <div ng-if="myQueryCreate.ticket" class="alert alert-success" role="alert">
+        Your Query with ticket number {{myQueryCreate.ticket}} has been opened successfully.<br><br>
+        <a href="#/" class="btn btn-primary" style="color:white">View All Open Queries</a>
+      </div>
+
+      <div class="alert alert-primary" role="alert">
+        Submit new zip to create products.
+        <ul>
+          <li>The uploaded file must be in zip format.</li>
+          <li>The uploaded file must be in the same structure as downloaded from the github repository.</li>
+          <li>Redundant files will be overwritten.</li>
+          <li>Just download the github repository which has folder named test which contains files.</li>
+
+        </ul>
+      </div>
+
+      <!--start of file upload division-->
+      <form name="myQueryCreate.upload_form">
+        Upload relevant file &nbsp;
+              <input 
+                  type="file" 
+                  ngf-select 
+                  ng-model="myQueryCreate.file" 
+                  name="file" 
+                  ngf-pattern="'.zip'"
+                  accept="*" 
+                  ngf-max-size="1GB" 
+                  />
+              <i ng-show="myQueryCreate.upload_form.file.$error.maxSize">File too large : max allowed is 1GB</i>
+              <p>{{myQueryCreate.progress}}</p>
+      </form>
+      
+      <!--=================================================== file upload card ends ======================================================-->
+
+      <button ng-click="myQueryCreate.submit()" class="btn btn-success" style="width: 130px;cursor: pointer;">Submit now!</button>
+
+    </div>
+
+  </div>
+</div>
+
+<!--=================================================== footer starts ======================================================-->
+
+<footer class="footmar">
+  <div>
+  <br>
+    Created and Designed by:
+    <br>
+    Vivek Shankar<br>
+    <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=viveksome@gmail.com" style="color: white;"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;viveksome@gmail.com</a><br>
+    <a href=""><i class="fa fa-facebook-square" aria-hidden="true" style="color: #3B5998"></i></a>
+    <a href=""><i class="fa fa-google-plus" aria-hidden="true" style="color: #D62221"></i></a>
+    <a href=""><i class="fa fa-twitter-square" aria-hidden="true" style="color: #1DA1F2"></i></a>
+
+  </div>
+</footer>
+
+<!--=================================================== footer ends ======================================================-->
