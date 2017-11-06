@@ -14,10 +14,10 @@
 ## Project Description
 ```
 Product management is an essential feature of any ecommerce platform, and dedicated management systems that 
-are robust and fast required for managing products exeeding million in numbers. The Aim of the project is to 
-create a product management syatem that takes a zip as input and automatically maps the images with the mapping 
-file and store items into the database. It also allows the user to edit the product details and images at any 
-amount of time.
+are robust and fast are required for managing products exceeding million in numbers. The Aim of the project is to 
+create a product management system that takes a zip as input and automatically maps the images with the mapping 
+file and store items into the database. It also allows the user to edit the product details and images at any of 
+time.
 ```
 
 ### Installing
